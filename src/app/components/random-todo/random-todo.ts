@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Signal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { ToDo } from '../../types/todo.type';
 import { LoadingState } from '../../types/loading-state.type';
 import { LoadingStateFactoryService } from '../../services/loading-state-factory.service';
@@ -9,7 +9,8 @@ import { ToDoBox } from '../to-do-box/to-do-box';
   selector: 'app-random-todo.ts',
   imports: [ToDoBox],
   templateUrl: './random-todo.html',
-  styleUrl: './random-todo.css'
+  styleUrl: './random-todo.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RandomTodo implements OnInit {
   private readonly loadingStateFactoryService: LoadingStateFactoryService<ToDo> = inject(LoadingStateFactoryService);
