@@ -1,0 +1,15 @@
+<div (contextmenu)="onContextMenu($event)">
+	<div
+		#contextMenu
+		class="context-menu"
+		[style]="contextMenuStyles"
+		[style.visibility]="isMenuOpen ? '' : 'hidden'"
+	>
+		@for(option of options(); track $index) {
+			<div class="context-menu-option" (click)="option.onClick($event)">
+				{{option.title}}
+			</div>
+		}
+	</div>
+	<ng-content></ng-content>
+</div>

@@ -1,0 +1,25 @@
+:host {
+	display: block;
+}
+div.context-menu {
+	position: fixed;
+	z-index: 2;
+	background-color: black;
+	color: white;
+	user-select: none;
+	width: 20%;
+	height: auto;
+	overflow: auto;
+	border: none;
+}
+
+div.context-menu-option {
+	border: 0.2rem solid black;
+}
+
+div.context-menu-option:hover {
+	background-color: white;
+	color: black;
+	transition: 0.3s;
+	cursor: pointer;
+}

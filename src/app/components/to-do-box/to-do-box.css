@@ -1,0 +1,10 @@
+div {
+	border: 0.1rem solid black;
+	margin-bottom: 0.1rem;
+	padding: 0 0.3rem;
+}
+
+.completed {
+	text-decoration: line-through;
+	opacity: 0.5;
+}

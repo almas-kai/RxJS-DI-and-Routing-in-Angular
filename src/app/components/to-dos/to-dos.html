@@ -1,0 +1,23 @@
+<app-context-menu [options]="contextMenuOptions">
+	<section>
+		<h2>All To Dos</h2>
+		<router-outlet />
+		@if(this.displayedToDos().isLoading) {
+			<p>Please wait the loading is in progress.</p>
+		}
+		@else if(this.displayedToDos().error) {
+			<p>Error. Sorry something unexpected happened!</p>
+		}
+		@else {
+			@for (toDo of this.displayedToDos().data ?? []; track toDo.id) {
+			<app-to-do-box [toDoData]="toDo"></app-to-do-box>
+			}
+			@empty {
+				<p>You don't have any things to do!</p>
+			}
+		}
+		<footer>
+			Data from <a [href]="this.apiFrom" class="used-api">DummyJSON</a>
+		</footer>
+	</section>
+</app-context-menu>
