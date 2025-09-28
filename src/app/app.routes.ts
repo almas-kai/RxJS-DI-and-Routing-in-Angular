@@ -3,6 +3,7 @@ import { ToDosComponent } from './components/to-dos/to-dos';
 import { HomePage } from './components/home-page/home-page';
 import { ToDosService } from './services/to-dos.service';
 import { RandomTodo } from './components/random-todo/random-todo';
+import { Counter } from './components/counter/counter';
 
 export const routes: Routes = [
 	{
@@ -18,10 +19,15 @@ export const routes: Routes = [
 			ToDosService
 		],
 		children: [
-			{		
+			{
 				path: 'random-to-do/:id',
 				component: RandomTodo
 			}
 		]
+	},
+	{
+		path: 'counter',
+		component: Counter,
+		title: 'My counter'
 	}
 ];
