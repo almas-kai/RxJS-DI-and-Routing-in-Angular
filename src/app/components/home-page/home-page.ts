@@ -9,5 +9,10 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePage {
-
+  public getTokenForToDosPage(): void {
+    sessionStorage.setItem('todos-token', '');
+  }
+  public getTokenForCounterPage(): void {
+    sessionStorage.setItem('counter-token', '');
+  }
 }
