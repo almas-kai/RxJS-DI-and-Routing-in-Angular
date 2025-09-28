@@ -1,15 +1,17 @@
-@if(this.loadingStateToDo().isLoading) {
-	<p>Loading...</p>
-}
-@else if(this.loadingStateToDo().error) {
-	<p>Something went wrong!</p>
-}
-@else if(this.loadingStateToDo().data) {
-	<div>
-		<h2>Random To Do!</h2>
-		<app-to-do-box [toDoData]="this.loadingStateToDo().data!"></app-to-do-box>
-	</div>
-}
-@else {
-	<p>There is no to-do! Everything is complete!</p>
+@if(this.loadingStateToDo | async; as state) {
+	@if(state.isLoading) {
+		<p>Loading...</p>
+	}
+	@else if(state.error) {
+		<p>Something went wrong!</p>
+	}
+	@else if(state.data) {
+		<div>
+			<h2>Random To Do!</h2>
+			<app-to-do-box [toDoData]="state.data!"></app-to-do-box>
+		</div>
+	}
+	@else {
+		<p>There is no to-do! Everything is complete!</p>
+	}
 }

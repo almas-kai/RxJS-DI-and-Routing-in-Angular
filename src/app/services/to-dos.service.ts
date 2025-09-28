@@ -32,12 +32,6 @@ export class ToDosService {
   public getToDoById(id: number): Observable<LoadingState<ToDo>> {
     return this.httpClient.get<ToDo>(this.toDosUrl + id).pipe(
       map((response) => this.toDoLoadingStateFactoryService.success(response)),
-      catchError((error: unknown) => {
-        return of(
-          this.toDoLoadingStateFactoryService.failure(error instanceof Error ? error : new Error(String(error)))
-        );
-      }),
-      startWith(this.toDoLoadingStateFactoryService.loading())
     );
   }
 }

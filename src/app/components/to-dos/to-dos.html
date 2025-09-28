@@ -2,18 +2,20 @@
 	<section>
 		<h2>All To Dos</h2>
 		<router-outlet />
-		@if(this.displayedToDos().isLoading) {
-			<p>Please wait the loading is in progress.</p>
-		}
-		@else if(this.displayedToDos().error) {
-			<p>Error. Sorry something unexpected happened!</p>
-		}
-		@else {
-			@for (toDo of this.displayedToDos().data ?? []; track toDo.id) {
-			<app-to-do-box [toDoData]="toDo"></app-to-do-box>
+		@if(this.displayedToDos | async; as state) {
+			@if(state.isLoading) {
+				<p>Please wait the loading is in progress.</p>
 			}
-			@empty {
-				<p>You don't have any things to do!</p>
+			@else if(state.error) {
+				<p>Error. Sorry something unexpected happened!</p>
+			}
+			@else {
+				@for(todo of state.data; track todo.id) {
+					<app-to-do-box [toDoData]="todo"></app-to-do-box>
+				}
+				@empty {
+					<p>No todos!</p>
+				}
 			}
 		}
 		<footer>
