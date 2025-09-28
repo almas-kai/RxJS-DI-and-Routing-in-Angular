@@ -15,14 +15,14 @@ import { ToDoBox } from '../to-do-box/to-do-box';
 export class RandomTodo implements OnInit {
   private readonly loadingStateFactoryService: LoadingStateFactoryService<ToDo> = inject(LoadingStateFactoryService);
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  public loadingStateToDo: Signal<LoadingState<ToDo>> = signal<LoadingState<ToDo>>(this.loadingStateFactoryService.loading());
+  public loadingStateToDo: LoadingState<ToDo> = <LoadingState<ToDo>>(this.loadingStateFactoryService.loading());
   
   public ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((params: ParamMap) => {
       const raw: string | null = params.get('todo');
       const loadingStateToDo: LoadingState<ToDo> = this.loadingStateFactoryService.idle();
       loadingStateToDo.data = raw === null ? null : JSON.parse(decodeURIComponent(raw));
-      this.loadingStateToDo = signal(loadingStateToDo);
+      this.loadingStateToDo = loadingStateToDo;
     });
   }
 }
