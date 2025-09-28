@@ -88,29 +88,21 @@ export class ToDosComponent implements OnInit {
     const nonCompletedToDos: LoadingState<ToDo[]> = this.filterReceivedToDos((toDo: ToDo) => toDo.completed === false);
     
     const data: ToDo[] | null = nonCompletedToDos.data;
-    const max: number = data === null ? 0 : data.length - 1;
-    const randomIndex: number = Math.floor(Math.random() * (max + 1));
+    const max: number = data?.length || 0;
+    const randomIndex: number = Math.floor(Math.random() * max);
+    const toDoId: string | number = data?.at(randomIndex)?.id || '';
 
-    const randomToDo: ToDo | null = data === null ? null : data[randomIndex];
-
-    this.router.navigate(['random-to-do'], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        todo: encodeURIComponent(JSON.stringify(randomToDo))
-      }
+    this.router.navigate(['random-to-do', toDoId], {
+      relativeTo: this.activatedRoute
     });
   }
 
   public cancelRandomToDo(event: PointerEvent): void {
-    if(this.router.isActive('/to-dos/random-to-do', {
-      paths: 'exact',
-      queryParams: 'ignored',
-      fragment: 'ignored',
-      matrixParams: 'ignored'
-    })) {
+    if (this.router.url.startsWith('/to-dos/random-to-do/')) {
       this.router.navigate(['/to-dos']);
     }
   }
+
 
   private filterReceivedToDos(predicate: (value: ToDo, index?: number, array?: ToDo[]) => boolean): LoadingState<ToDo[]> {
     return (

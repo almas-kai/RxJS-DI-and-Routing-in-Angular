@@ -10,20 +10,34 @@ import { LoadingStateFactoryService } from './loading-state-factory.service';
 export class ToDosService {
   private readonly httpClient: HttpClient = inject(HttpClient);
   private readonly urlsProvider: UrlsProviderService = inject(UrlsProviderService);
-  private readonly toDosLoadingStateFactoryService: LoadingStateFactoryService<ToDo[]> = inject(LoadingStateFactoryService);
+  private readonly toDoCollectionLoadingStateFactoryService: LoadingStateFactoryService<ToDo[]> = inject(LoadingStateFactoryService);
   private readonly toDoLoadingStateFactoryService: LoadingStateFactoryService<ToDo> = inject(LoadingStateFactoryService);
 
-  private readonly limitlessToDosUrl: string = this.urlsProvider.rootDomain + this.urlsProvider.toDosSubDomain + this.urlsProvider.limitlessParam;
+  private readonly toDosUrl: string = this.urlsProvider.rootDomain + this.urlsProvider.toDosSubDomain;
+  private readonly limitlessToDosUrl: string = this.toDosUrl + this.urlsProvider.limitlessParam;
+
   
   public getToDos(): Observable<LoadingState<ToDo[]>> {
     return this.httpClient.get<{ todos: ToDo[]}>(this.limitlessToDosUrl).pipe(
-      map((response) => this.toDosLoadingStateFactoryService.success(response.todos)),
+      map((response) => this.toDoCollectionLoadingStateFactoryService.success(response.todos)),
       catchError((error: unknown) => {
         return of(
-          this.toDosLoadingStateFactoryService.failure(error instanceof Error ? error : new Error(String(error)))
+          this.toDoCollectionLoadingStateFactoryService.failure(error instanceof Error ? error : new Error(String(error)))
         );
       }),
-      startWith(this.toDosLoadingStateFactoryService.loading())
+      startWith(this.toDoCollectionLoadingStateFactoryService.loading())
+    );
+  }
+
+  public getToDoById(id: number): Observable<LoadingState<ToDo>> {
+    return this.httpClient.get<ToDo>(this.toDosUrl + id).pipe(
+      map((response) => this.toDoLoadingStateFactoryService.success(response)),
+      catchError((error: unknown) => {
+        return of(
+          this.toDoLoadingStateFactoryService.failure(error instanceof Error ? error : new Error(String(error)))
+        );
+      }),
+      startWith(this.toDoLoadingStateFactoryService.loading())
     );
   }
 }

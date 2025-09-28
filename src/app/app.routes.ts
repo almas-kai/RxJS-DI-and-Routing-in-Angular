@@ -18,8 +18,8 @@ export const routes: Routes = [
 			ToDosService
 		],
 		children: [
-			{
-				path: 'random-to-do',
+			{		
+				path: 'random-to-do/:id',
 				component: RandomTodo
 			}
 		]
