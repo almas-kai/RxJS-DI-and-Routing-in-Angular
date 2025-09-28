@@ -1,13 +1,13 @@
-@if(this.loadingStateToDo().isLoading) {
+@if(this.loadingStateToDo.isLoading) {
 	<p>Loading...</p>
 }
-@else if(this.loadingStateToDo().error) {
+@else if(this.loadingStateToDo.error) {
 	<p>Something went wrong!</p>
 }
-@else if(this.loadingStateToDo().data) {
+@else if(this.loadingStateToDo.data) {
 	<div>
 		<h2>Random To Do!</h2>
-		<app-to-do-box [toDoData]="this.loadingStateToDo().data!"></app-to-do-box>
+		<app-to-do-box [toDoData]="this.loadingStateToDo.data!"></app-to-do-box>
 	</div>
 }
 @else {
