@@ -14,7 +14,6 @@ export const routes: Routes = [
 	},
 	{
 		path: 'to-dos',
-		component: ToDosComponent,
 		title: 'To Dos',
 		providers: [
 			ToDosService
@@ -28,15 +27,16 @@ export const routes: Routes = [
 		data: {
 			tokenKey: 'todos-token'
 		},
-		canActivate: [authenticationGuard]
+		canActivate: [authenticationGuard],
+		loadComponent: () => import('./components/to-dos/to-dos').then((module) => module.ToDosComponent)
 	},
 	{
 		path: 'counter',
-		component: Counter,
 		title: 'My counter',
 		data: {
 			tokenKey: 'counter-token'
 		},
-		canActivate: [authenticationGuard]
+		canActivate: [authenticationGuard],
+		loadComponent: () => import('./components/counter/counter').then((module) => module.Counter)
 	}
 ];
